@@ -20,6 +20,7 @@ public:
 	void addTwoWords(string, string);
 	void addCondProb(string, string, double);
 	void printGrams();
+	void calcCondProb();
 	int getWord(string);
 	int getTwoWords(string, string);
 	double getCondProb(string, string);

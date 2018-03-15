@@ -169,11 +169,11 @@ void VectorDS::printGrams() {
 	for (int i = 0; i < bi.size(); i++) {
 		splitWords = split(bi[i].first);
 		file << splitWords.first << ' ' << splitWords.second << ' '
-				<< bi[i].second << ' ' << prob[i] << endl;
+				<< bi[i].second << ' ' << prob[i].second << endl;
 	}
 }
 
-string toLowerCase(string word) {
+string VectorDS::toLowerCase(string word) {
 	string out = word;
 
 	for (int i = 0; i < out.length; i++) {
@@ -181,4 +181,34 @@ string toLowerCase(string word) {
 	}
 
 	return out;
+}
+
+void VectorDS::calcCondProb() {
+
+	int size = bi.size();
+	int wordCount;
+	double condProb;
+
+	pair<string, string> splitWords;
+
+	if (bi.size() == 0 || mono.size() == 0) {
+		size = -1;
+	}
+
+	for (int i = 0; i < size; i++) {
+
+		splitWords = split(bi[i].first);
+		wordCount = getWord(splitWords.first);
+
+		condProb = bi[i].second / wordCount;
+
+		prob[i].second = condProb;
+	}
+
+	if (size == -1) {
+		cerr
+				<< "Both the monograms and bigrams should be calculated becfore trying to calculate the probabilities."
+				<< endl;
+	}
+
 }
