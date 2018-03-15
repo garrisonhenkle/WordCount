@@ -12,6 +12,9 @@ using namespace std;
 
 #include <string>;
 #include <vector>;
+#include <iostream>;
+#include <fstream>;
+#include <algorithm>;
 
 class DataStructure {
 public:

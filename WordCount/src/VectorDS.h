@@ -19,10 +19,12 @@ public:
 	void addWord(string);
 	void addTwoWords(string, string);
 	void addCondProb(string, string, double);
+	void printGrams();
 	int getWord(string);
 	int getTwoWords(string, string);
 	double getCondProb(string, string);
 	pair<string, string> split(string);
+	string toLowerCase(string);
 
 private:
 	vector<pair<string, int>> mono;

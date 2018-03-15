@@ -22,8 +22,10 @@ VectorDS::~VectorDS() {
 	delete prob;
 }
 
-void VectorDS::addWord(string word) {
+void VectorDS::addWord(string in) {
 	int flag = 0;
+
+	string word = toLowerCase(in);
 
 	for (int i = 0; i < mono.size(); i++) {
 		if (mono[i].first == word) {
@@ -41,7 +43,7 @@ void VectorDS::addTwoWords(string wordOne, string wordTwo) {
 
 	int flag = 0;
 
-	string word = wordOne + ' ' + wordTwo;
+	string word = toLowerCase(wordOne + ' ' + wordTwo);
 
 	for (int i = 0; i < bi.size(); i++) {
 		if (bi[i].first == word) {
@@ -59,7 +61,7 @@ void VectorDS::addCondProb(string wordOne, string wordTwo, double probability) {
 
 	int flag = 0;
 
-	string word = wordOne + ' ' + wordTwo;
+	string word = toLowerCase(wordOne + ' ' + wordTwo);
 
 	for (int i = 0; i < prob.size(); i++) {
 		if (prob[i].first == word) {
@@ -73,8 +75,10 @@ void VectorDS::addCondProb(string wordOne, string wordTwo, double probability) {
 	}
 }
 
-int VectorDS::getWord(string word) {
+int VectorDS::getWord(string in) {
 	int out = -1;
+
+	string word = toLowerCase(in);
 
 	for (int i = 0; i < mono.size(); i++) {
 		if (mono[i].first == word) {
@@ -89,7 +93,7 @@ int VectorDS::getWord(string word) {
 int VectorDS::getTwoWords(string wordOne, string wordTwo) {
 	int out = -1;
 
-	string word = wordOne + ' ' + wordTwo;
+	string word = toLowerCase(wordOne + ' ' + wordTwo);
 
 	for (int i = 0; i < bi.size(); i++) {
 		if (bi[i].first == word) {
@@ -104,7 +108,7 @@ int VectorDS::getTwoWords(string wordOne, string wordTwo) {
 double VectorDS::getCondProb(string wordOne, string wordTwo) {
 	double out = -1;
 
-	string word = wordOne + ' ' + wordTwo;
+	string word = toLowerCase(wordOne + ' ' + wordTwo);
 
 	for (int i = 0; i < prob.size(); i++) {
 		if (prob[i].first == word) {
@@ -137,3 +141,44 @@ pair<string, string> VectorDS::split(string words) {
 	return out;
 }
 
+void VectorDS::printGrams() {
+	string monoOut = "text.uni";
+	string biOut = "text.bi";
+
+	ofstream file;
+	pair<string, string> splitWords;
+
+	file.open(monoOut);
+	if (!file) {
+		cerr << "Can't write the output files.";
+		exit(1);
+	}
+
+	for (int i = 0; i < mono.size(); i++) {
+		file << mono[i].first << ' ' << mono[i].second << endl;
+	}
+
+	file.close();
+
+	file.open(biOut);
+	if (!file) {
+		cerr << "Can't write the output files.";
+		exit(1);
+	}
+
+	for (int i = 0; i < bi.size(); i++) {
+		splitWords = split(bi[i].first);
+		file << splitWords.first << ' ' << splitWords.second << ' '
+				<< bi[i].second << ' ' << prob[i] << endl;
+	}
+}
+
+string toLowerCase(string word) {
+	string out = word;
+
+	for (int i = 0; i < out.length; i++) {
+		out[i] = tolower(out[i]);
+	}
+
+	return out;
+}
