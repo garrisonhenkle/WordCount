@@ -14,7 +14,14 @@ using namespace std;
 
 class WordCount {
 public:
-	void processVectorDS(string, VectorDS&);
+	/**
+	 * Processes the vectorDS datastructure by calculating the probabilties of each bigram and outputs the results to the files text.uni and text.bi
+	 */
+	void processVectorDS(string, VectorDS*);
+
+	/**
+	 * Converts a line into a vector of words (strings)
+	 */
 	vector<string> processLine(string);
 };
 
