@@ -9,7 +9,12 @@
 
 //see header for description
 VectorDS::VectorDS() {
+	pair<string, int> temp = make_pair(" ", 0);
 
+	mono[0] = temp;
+	bi[0] = temp;
+	prob[0] = temp;
+	cout << "work" << endl;
 } //end constructor VectorDS
 
 //see header for description
@@ -109,13 +114,17 @@ int VectorDS::getWord(string in) {
 
 int& VectorDS::getWordRef(string in) {
 
+	//searches the mono vector for the monogram.  Returns the reference or creates a reference.
 	for (int i = 0; i < mono.size(); i++) {
 		if (mono[i].first == in) {
 			return mono[i].second;
 		}
 	}
 
-	return mono[0].second;
+	//isn't in mono, so add it
+	mono.push_back(make_pair(in, 1));
+
+	return mono[mono.size() - 1].second;
 } //end getWordRef(string)
 
 //see header for description
@@ -142,13 +151,17 @@ int& VectorDS::getTwoWordsRef(string wordOne, string wordTwo) {
 	//combines the two words into one and sends to lower case
 	string word = toLowerCase(wordOne + ' ' + wordTwo);
 
-	//searches the bi vector for the bigram.  Returns the reference to the count or -1.
+	//searches the bi vector for the bigram.  Returns the reference or creates a reference.
 	for (int i = 0; i < bi.size(); i++) {
 		if (bi[i].first == word) {
 			return bi[i].second;
 		}
 	}
-	return bi[0].second;
+
+	//isn't in bi, so add it
+	bi.push_back(make_pair(word, 1));
+
+	return bi[bi.size() - 1].second;
 } //end getTwoWordsRed(string, string)
 
 //see header for description
@@ -175,14 +188,20 @@ double& VectorDS::getCondProbRef(string wordOne, string wordTwo) {
 	//combines the two words into one and sends to lower case
 	string word = toLowerCase(wordOne + ' ' + wordTwo);
 
+	//search for the probability in the vector
 	for (int i = 0; i < prob.size(); i++) {
 		if (prob[i].first == word) {
 			return prob[i].second;
 		}
 	}
 
-	return prob[0].second;
+	//if its not there, add it
+	prob.push_back(make_pair(word, 1));
+
+	return prob[prob.size() -1].second;
+
 } //end getCondProbRef(string, string)
+
 
 //see header for description
 pair<string, string> VectorDS::split(string words) {
@@ -218,6 +237,9 @@ void VectorDS::printGrams() {
 
 	//output file stream
 	ofstream file;
+	ofstream file2;
+
+	calcCondProb();
 
 	//
 	//uni file
@@ -243,20 +265,20 @@ void VectorDS::printGrams() {
 	//
 
 	//tries to open the file, exits if the file fails to open
-	file.open(biOut);
-	if (!file) {
+	file2.open(biOut);
+	if (!file2) {
 		cerr << "Can't write the output files.";
 		exit(1);
 	}
 
 	//prints the bigram, a space, the bigram's count, a space, and the probability of the bigram
 	for (int i = 0; i < bi.size(); i++) {
-		file << bi[i].first << ' ' << bi[i].second << ' ' << prob[i].second
+		file2 << bi[i].first << ' ' << bi[i].second << ' ' << prob[i].second
 				<< endl;
 	} //end for
 
 	//closes the bi file
-	file.close();
+	file2.close();
 } //end printGrams()
 
 //see header for description
@@ -275,7 +297,7 @@ string VectorDS::toLowerCase(string word) {
 void VectorDS::calcCondProb() {
 
 	//size of the bi vector
-	int size = bi > size();
+	int size = bi.size();
 	//count of the first word
 	int wordCount;
 	//probability of the first word followed by the second word

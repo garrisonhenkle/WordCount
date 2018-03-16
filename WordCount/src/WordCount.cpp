@@ -13,16 +13,21 @@ int main(int argc, char* argv[]) {
 	long AvlTime;
 	long HashTime;
 
+
+
 	VectorDS ds = VectorDS();
-	WordCount * wc = new WordCount();
+	WordCount wc = WordCount();
+
+	cout << "work" << endl;
 
 	auto startTime = chrono::high_resolution_clock::now();
-	wc->processVectorDS("test2.txt", ds);
+
+	wc.processVectorDS("test2.txt", ds);
 	auto finishTime = chrono::high_resolution_clock::now();
 	vectorTime = chrono::duration_cast<chrono::nanoseconds>(
 			finishTime - startTime).count();
 
-	delete wc;
+	return 0;
 } //end main(int, char*)
 
 //see header for description
@@ -95,17 +100,15 @@ void WordCount::processVectorDS(string fileLoc, VectorDS inputDS) {
 		ds[current]++;
 
 		//increment all the monograms and bigrams of the line
-		for
-(		int i = 1; i < words.size(); i++)
-		{
+		for (int i = 1; i < words.size(); i++) {
 			last = current;
 			current = words[i];
 
 			ds[current]++;
-			ds(last, current)++;
-		} //end for
+			ds(last, current)++;}
+			//end for
 
-		//set the current to last so it can be carried over to the next line
+			//set the current to last so it can be carried over to the next line
 		last = current;
 	} //end while
 

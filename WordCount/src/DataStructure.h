@@ -20,16 +20,6 @@ using namespace std;
 class DataStructure {
 public:
 	/**
-	 * Default Constructor (not used)
-	 */
-	DataStructure();
-
-	/**
-	 * Default Deconstructor (not used)
-	 */
-	virtual ~DataStructure();
-
-	/**
 	 * Increments the count of a monogram input in the datastructure
 	 *
 	 * Tries to find the monogram in the datastructure.  If the word is present, the monogram's count is incremented.
