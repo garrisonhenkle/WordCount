@@ -293,31 +293,28 @@ double VectorDS::calcProb(string wordOne, string wordTwo) {
 } //end calcProb(string, string)
 
 //see header for description
-double& VectorDS::operator[](string wordOne, string wordTwo) {
-	double& out;
+int& VectorDS::operator[](string word) {
 
-	//returns the probability for the bigram
-	out = getCondProb(wordOne, wordTwo);
+	//returns the count of the monogram
+	int& out = getWord(word);
 
 	return out;
 } //end operator[](string, string)
 
 //see header for description
-int& VectorDS::operator()(string wordOne) {
-	int& out;
+double& VectorDS::operator()(string wordOne, string wordTwo, int distinction) {
 
 	//returns the count of the monogram
-	out = getWord(wordOne);
+	double& out = getWord(wordOne);
 
 	return out;
 } //end operator()(string)
 
 //see header for description
 int& VectorDS::operator()(string wordOne, string wordTwo) {
-	int& out;
 
 	//returns the count of the bigram
-	out = getTwoWords(wordOne, wordTwo);
+	int& out = getTwoWords(wordOne, wordTwo);
 
 	return out;
 } //end operator()(string, string)

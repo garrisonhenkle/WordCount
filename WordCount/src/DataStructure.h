@@ -10,12 +10,12 @@
 
 using namespace std;
 
-#include <string>;
-#include <vector>;
-#include <iostream>;
-#include <fstream>;
-#include <algorithm>;
-#include <chrono>;
+#include <string>
+#include <vector>
+#include <iostream>
+#include <fstream>
+#include <algorithm>
+#include <chrono>
 
 class DataStructure {
 public:

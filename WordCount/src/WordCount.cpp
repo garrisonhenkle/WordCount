@@ -13,7 +13,7 @@ int main(int argc, char* argv[]) {
 	long AvlTime;
 	long HashTime;
 
-	VectorDS * ds = new VectorDS();
+	VectorDS ds = VectorDS();
 	WordCount * wc = new WordCount();
 
 	auto startTime = chrono::high_resolution_clock::now();
@@ -23,7 +23,6 @@ int main(int argc, char* argv[]) {
 			finishTime - startTime).count();
 
 	delete wc;
-	delete ds;
 } //end main(int, char*)
 
 //see header for description
@@ -55,9 +54,9 @@ vector<string> WordCount::processLine(string line) {
 } //end processLine(string)
 
 //see header for description
-void WordCount::processVectorDS(string fileLoc, VectorDS* inputDS) {
+void WordCount::processVectorDS(string fileLoc, VectorDS inputDS) {
 	//datastructure being used to process the text
-	VectorDS * ds = inputDS;
+	VectorDS ds = inputDS;
 
 	//input file stream
 	ifstream file;
@@ -111,13 +110,10 @@ void WordCount::processVectorDS(string fileLoc, VectorDS* inputDS) {
 	} //end while
 
 	//calclulates all the probabilies for all the bigrams
-	ds->calcCondProb();
+	ds.calcCondProb();
 	//prints all the data to the .uni and .bi files
-	ds->printGrams();
+	ds.printGrams();
 
 	//close the input stream
 	file.close();
-
-	//delete the pointers
-	delete ds;
 } //end processVectorDS(string, VectorDS)

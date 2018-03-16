@@ -10,7 +10,7 @@
 
 //using namespace std; already in Datastructure.h
 
-#include "DataStructure.h";
+#include "DataStructure.h"
 
 class VectorDS: public DataStructure {
 public:
@@ -92,17 +92,17 @@ public:
 	/**
 	 * operator that returns the probability of an input bigram
 	 */
-	double& operator[](string, string) override;
+	double& operator[](string, string);
 
 	/**
 	 * operator that returns the count of an input monogram
 	 */
-	int& operator()(string) override;
+	int& operator()(string);
 
 	/**
 	 * operator that returns the count of an input bigram
 	 */
-	int& operator()(string, string) override;
+	int& operator()(string, string);
 
 private:
 	//contains the monograms
