@@ -9,20 +9,15 @@
 
 //see header for description
 VectorDS::VectorDS() {
-	mono = new vector<pair<string, int>>;
-	bi = new vector<pair<string, int>>;
-	prob = new vector<pair<string, double>>;
+
 } //end constructor VectorDS
 
 //see header for description
 VectorDS::~VectorDS() {
 
 	mono.clear();
-	delete mono;
 	bi.clear();
-	delete bi;
 	prob.clear();
-	delete prob;
 } //end deconstructor VectorDS
 
 //see header for description
@@ -82,7 +77,7 @@ void VectorDS::addCondProb(string wordOne, string wordTwo, double probability) {
 	//searches the prob vector for the bigram.  If found, the probability is set to the input and the flag thrown
 	for (int i = 0; i < prob.size(); i++) {
 		if (prob[i].first == word) {
-			prob[i] = probability;
+			prob[i].second = probability;
 			flag = 1;
 			break;
 		}
@@ -112,6 +107,17 @@ int VectorDS::getWord(string in) {
 	return out;
 } //end getWord(string)
 
+int& VectorDS::getWordRef(string in) {
+
+	for (int i = 0; i < mono.size(); i++) {
+		if (mono[i].first == in) {
+			return mono[i].second;
+		}
+	}
+
+	return mono[0].second;
+} //end getWordRef(string)
+
 //see header for description
 int VectorDS::getTwoWords(string wordOne, string wordTwo) {
 	int out = -1;
@@ -131,6 +137,21 @@ int VectorDS::getTwoWords(string wordOne, string wordTwo) {
 } //end getTwoWords(string, string)
 
 //see header for description
+int& VectorDS::getTwoWordsRef(string wordOne, string wordTwo) {
+
+	//combines the two words into one and sends to lower case
+	string word = toLowerCase(wordOne + ' ' + wordTwo);
+
+	//searches the bi vector for the bigram.  Returns the reference to the count or -1.
+	for (int i = 0; i < bi.size(); i++) {
+		if (bi[i].first == word) {
+			return bi[i].second;
+		}
+	}
+	return bi[0].second;
+} //end getTwoWordsRed(string, string)
+
+//see header for description
 double VectorDS::getCondProb(string wordOne, string wordTwo) {
 	double out = -1;
 
@@ -147,6 +168,21 @@ double VectorDS::getCondProb(string wordOne, string wordTwo) {
 
 	return out;
 } //end getCondProb
+
+//see header for description
+double& VectorDS::getCondProbRef(string wordOne, string wordTwo) {
+
+	//combines the two words into one and sends to lower case
+	string word = toLowerCase(wordOne + ' ' + wordTwo);
+
+	for (int i = 0; i < prob.size(); i++) {
+		if (prob[i].first == word) {
+			return prob[i].second;
+		}
+	}
+
+	return prob[0].second;
+} //end getCondProbRef(string, string)
 
 //see header for description
 pair<string, string> VectorDS::split(string words) {
@@ -228,7 +264,7 @@ string VectorDS::toLowerCase(string word) {
 	string out = word;
 
 	//calls the toLower() function on each character and returns the string
-	for (int i = 0; i < out.length; i++) {
+	for (int i = 0; i < out.length(); i++) {
 		out[i] = tolower(out[i]);
 	}
 
@@ -239,7 +275,7 @@ string VectorDS::toLowerCase(string word) {
 void VectorDS::calcCondProb() {
 
 	//size of the bi vector
-	int size = bi.size();
+	int size = bi > size();
 	//count of the first word
 	int wordCount;
 	//probability of the first word followed by the second word
@@ -296,7 +332,7 @@ double VectorDS::calcProb(string wordOne, string wordTwo) {
 int& VectorDS::operator[](string word) {
 
 	//returns the count of the monogram
-	int& out = getWord(word);
+	int& out = getWordRef(word);
 
 	return out;
 } //end operator[](string, string)
@@ -305,7 +341,7 @@ int& VectorDS::operator[](string word) {
 double& VectorDS::operator()(string wordOne, string wordTwo, int distinction) {
 
 	//returns the count of the monogram
-	double& out = getWord(wordOne);
+	double& out = getCondProbRef(wordOne, wordTwo);
 
 	return out;
 } //end operator()(string)
@@ -314,7 +350,7 @@ double& VectorDS::operator()(string wordOne, string wordTwo, int distinction) {
 int& VectorDS::operator()(string wordOne, string wordTwo) {
 
 	//returns the count of the bigram
-	int& out = getTwoWords(wordOne, wordTwo);
+	int& out = getTwoWordsRef(wordOne, wordTwo);
 
 	return out;
 } //end operator()(string, string)

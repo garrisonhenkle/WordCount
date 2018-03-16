@@ -1,8 +1,8 @@
 /*
  * WordCount.h
  *
- *  Created on: Mar 14, 2018
- *      Author: garrison
+ *  Created on: Mar 10, 2018
+ *      Author: Garrison Henkle
  */
 
 #ifndef WORDCOUNT_H_

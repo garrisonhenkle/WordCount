@@ -1,8 +1,8 @@
 /*
  * WordCount.cpp
  *
- *  Created on: Mar 14, 2018
- *      Author: garrison
+ *  Created on: Mar 10, 2018
+ *      Author: Garrison Henkle
  */
 
 #include "WordCount.h"
@@ -92,7 +92,7 @@ void WordCount::processVectorDS(string fileLoc, VectorDS inputDS) {
 			ds(last, current)++;}
 
 			//increment the current's monogram
-		ds(current)++;
+		ds[current]++;
 
 		//increment all the monograms and bigrams of the line
 		for
@@ -101,7 +101,7 @@ void WordCount::processVectorDS(string fileLoc, VectorDS inputDS) {
 			last = current;
 			current = words[i];
 
-			ds(current)++;
+			ds[current]++;
 			ds(last, current)++;
 		} //end for
 

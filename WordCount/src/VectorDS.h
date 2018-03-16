@@ -51,6 +51,11 @@ public:
 	int getWord(string);
 
 	/**
+	 * Returns the reference location of the requested bigram's count variable
+	 */
+	int& getWordRef(string);
+
+	/**
 	 * Returns the count of the bigram
 	 *
 	 * Returns -1 if the bigram is not found
@@ -58,12 +63,24 @@ public:
 	int getTwoWords(string, string);
 
 	/**
+	 * Returns the reference location of the requested bigram's count variable
+	 */
+	int& getTwoWordsRef(string, string);
+
+	/**
 	 * Returns the probability of the bigram
 	 *
 	 * Returns -1 if the bigram is not found
 	 */
+
 	double getCondProb(string, string);
 
+	/**
+	 * Returns the reference location of the requested bigram's probability variable
+	 *
+	 * Returns -1 if the bigram is not found
+	 */
+	double& getCondProbRef(string, string);
 	/**
 	 * Prints the contents of the datastructure to the files text.uni and text.bi
 	 */
@@ -90,14 +107,14 @@ public:
 	string toLowerCase(string);
 
 	/**
-	 * operator that returns the probability of an input bigram
-	 */
-	double& operator[](string, string);
-
-	/**
 	 * operator that returns the count of an input monogram
 	 */
-	int& operator()(string);
+	int& operator[](string);
+
+	/**
+	 * operator that returns the probability of an input bigram
+	 */
+	double& operator()(string, string, int);
 
 	/**
 	 * operator that returns the count of an input bigram
