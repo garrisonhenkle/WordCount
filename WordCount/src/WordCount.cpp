@@ -18,18 +18,30 @@ int main(int argc, char* argv[]) {
 
 	ofstream file;
 
+	string fileName;
+
 	VectorDS * ds = new VectorDS();
 
 	WordCount wc = WordCount();
+
+	//for (int i = 0; i < argc; i++) {
+
+	//fileName = argv[i];
+
+	fileName = "text1.txt";
 
 	auto startTime = chrono::high_resolution_clock::now();
 
 	//Count using the vector
 	//Count placed inside a nanosecond timer
-	wc.processVectorDS("test2.txt", ds);
+	wc.processVectorDS(fileName, ds);
 	auto finishTime = chrono::high_resolution_clock::now();
 	time = chrono::duration_cast<chrono::nanoseconds>(finishTime - startTime).count();
 	vectorTime.push_back(time);
+	avlTime.push_back(0);
+	hashTime.push_back(0);
+
+//	}
 
 	file.open("text.time");
 	if (!file) {
@@ -38,8 +50,8 @@ int main(int argc, char* argv[]) {
 	}
 
 	file << '\t' << "Vector\t" << "AVL\t" << "Hash\t" << endl;
-	for (int i = 0; i < 5; i++) {
-		cout << ds->getFileSize << '\t' << vectorTime[i] << '\t' << avlTime[i] << '\t' << hashTime[i] << endl;
+	for (int i = 0; i < vectorTime.size(); i++) {
+		file << ds->getFileSize() << '\t' << vectorTime[i] << '\t' << avlTime[i] << '\t' << hashTime[i] << endl;
 	}
 
 	delete ds;

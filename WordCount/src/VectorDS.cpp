@@ -246,8 +246,6 @@ void VectorDS::printGrams() {
 		exit(1);
 	}
 
-	cout << "mono size is " << mono.size() << endl;
-
 	//prints the monogram followed by a space followed by the monogram's count
 	for (int i = 0; i < mono.size(); i++) {
 		file << mono[i].first << ' ' << mono[i].second << endl;
