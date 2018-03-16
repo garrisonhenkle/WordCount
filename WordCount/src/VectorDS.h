@@ -2,13 +2,13 @@
  * VectorDS.h
  *
  *  Created on: Mar 10, 2018
- *      Author: garrison
+ *      Author: Garrison henkle
  */
 
 #ifndef VECTORDS_H_
 #define VECTORDS_H_
 
-using namespace std;
+//using namespace std; already in Datastructure.h
 
 #include "DataStructure.h";
 

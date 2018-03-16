@@ -14,7 +14,8 @@ using namespace std;
 
 class WordCount {
 public:
-	void processVectorDS(string);
+	void processVectorDS(string, VectorDS&);
+	vector<string> processLine(string);
 };
 
 #endif /* WORDCOUNT_H_ */
