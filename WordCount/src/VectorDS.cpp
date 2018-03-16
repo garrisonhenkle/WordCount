@@ -9,12 +9,7 @@
 
 //see header for description
 VectorDS::VectorDS() {
-	pair<string, int> temp = make_pair(" ", 0);
-
-	mono[0] = temp;
-	bi[0] = temp;
-	prob[0] = temp;
-	cout << "work" << endl;
+	fileSize = 0;
 } //end constructor VectorDS
 
 //see header for description
@@ -122,7 +117,7 @@ int& VectorDS::getWordRef(string in) {
 	}
 
 	//isn't in mono, so add it
-	mono.push_back(make_pair(in, 1));
+	mono.push_back(make_pair(in, 0));
 
 	return mono[mono.size() - 1].second;
 } //end getWordRef(string)
@@ -159,7 +154,7 @@ int& VectorDS::getTwoWordsRef(string wordOne, string wordTwo) {
 	}
 
 	//isn't in bi, so add it
-	bi.push_back(make_pair(word, 1));
+	bi.push_back(make_pair(word, 0));
 
 	return bi[bi.size() - 1].second;
 } //end getTwoWordsRed(string, string)
@@ -198,10 +193,9 @@ double& VectorDS::getCondProbRef(string wordOne, string wordTwo) {
 	//if its not there, add it
 	prob.push_back(make_pair(word, 1));
 
-	return prob[prob.size() -1].second;
+	return prob[prob.size() - 1].second;
 
 } //end getCondProbRef(string, string)
-
 
 //see header for description
 pair<string, string> VectorDS::split(string words) {
@@ -252,6 +246,8 @@ void VectorDS::printGrams() {
 		exit(1);
 	}
 
+	cout << "mono size is " << mono.size() << endl;
+
 	//prints the monogram followed by a space followed by the monogram's count
 	for (int i = 0; i < mono.size(); i++) {
 		file << mono[i].first << ' ' << mono[i].second << endl;
@@ -273,8 +269,7 @@ void VectorDS::printGrams() {
 
 	//prints the bigram, a space, the bigram's count, a space, and the probability of the bigram
 	for (int i = 0; i < bi.size(); i++) {
-		file2 << bi[i].first << ' ' << bi[i].second << ' ' << prob[i].second
-				<< endl;
+		file2 << bi[i].first << ' ' << bi[i].second << ' ' << prob[i].second << endl;
 	} //end for
 
 	//closes the bi file
@@ -323,14 +318,12 @@ void VectorDS::calcCondProb() {
 		condProb = bi[i].second / wordCount;
 
 		//set the corresponding position in the prob vector to the probability
-		prob[i].second = condProb;
+		prob.push_back(make_pair(bi[i].first, condProb));
 	} //end for
 
 	//throw error for invalid input
 	if (size == -1) {
-		cerr
-				<< "Both the monograms and bigrams should be calculated becfore trying to calculate the probabilities."
-				<< endl;
+		cerr << "Both the monograms and bigrams should be calculated becfore trying to calculate the probabilities." << endl;
 	}
 
 } //end calcCondProb()
@@ -376,3 +369,11 @@ int& VectorDS::operator()(string wordOne, string wordTwo) {
 
 	return out;
 } //end operator()(string, string)
+
+void VectorDS::incrementFileSize(long x){
+	fileSize+= x;
+}
+
+long VectorDS::getFileSize(){
+	return fileSize;
+}

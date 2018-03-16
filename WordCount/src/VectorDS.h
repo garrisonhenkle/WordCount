@@ -121,6 +121,16 @@ public:
 	 */
 	int& operator()(string, string);
 
+	/**
+	 * Increments the fileSize by the input value
+	 */
+	void incrementFileSize(long);
+
+	/**
+	 * Returns the size of the file
+	 */
+	long getFileSize();
+
 private:
 	//contains the monograms
 	vector<pair<string, int>> mono;
@@ -128,6 +138,9 @@ private:
 	vector<pair<string, int>> bi;
 	//contains the probabilities
 	vector<pair<string, double>> prob;
+
+	//contains the size of the file
+	long fileSize;
 };
 
 #endif /* VECTORDS_H_ */

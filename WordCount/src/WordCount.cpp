@@ -9,24 +9,41 @@
 
 int main(int argc, char* argv[]) {
 
-	long vectorTime;
-	long AvlTime;
-	long HashTime;
+	//holds the time it takes for the three data structures to read and print
+	long time;
 
+	vector<long> vectorTime;
+	vector<long> avlTime;
+	vector<long> hashTime;
 
+	ofstream file;
 
-	VectorDS ds = VectorDS();
+	VectorDS * ds = new VectorDS();
+
 	WordCount wc = WordCount();
-
-	cout << "work" << endl;
 
 	auto startTime = chrono::high_resolution_clock::now();
 
+	//Count using the vector
+	//Count placed inside a nanosecond timer
 	wc.processVectorDS("test2.txt", ds);
 	auto finishTime = chrono::high_resolution_clock::now();
-	vectorTime = chrono::duration_cast<chrono::nanoseconds>(
-			finishTime - startTime).count();
+	time = chrono::duration_cast<chrono::nanoseconds>(finishTime - startTime).count();
+	vectorTime.push_back(time);
 
+	file.open("text.time");
+	if (!file) {
+		cerr << "couldn't open the file";
+		exit(1);
+	}
+
+	file << '\t' << "Vector\t" << "AVL\t" << "Hash\t" << endl;
+	for (int i = 0; i < 5; i++) {
+		cout << ds->getFileSize << '\t' << vectorTime[i] << '\t' << avlTime[i] << '\t' << hashTime[i] << endl;
+	}
+
+	delete ds;
+	cout << "Finished: output in files text.uni, text.bi, " << endl;
 	return 0;
 } //end main(int, char*)
 
@@ -40,8 +57,7 @@ vector<string> WordCount::processLine(string line) {
 	//creates words made up of lower- and upper-case letters and '
 	//once a word is created, it is pushed to the back of the output vector
 	for (int i = 0; i < line.length(); i++) {
-		if ((97 <= line[i] && line[i] <= 122)
-				|| (65 <= line[i] && line[i] <= 90) || line[i] == 39) {
+		if ((97 <= line[i] && line[i] <= 122) || (65 <= line[i] && line[i] <= 90) || line[i] == 39) {
 			temp += line[i];
 		} else {
 			out.push_back(temp);
@@ -59,9 +75,9 @@ vector<string> WordCount::processLine(string line) {
 } //end processLine(string)
 
 //see header for description
-void WordCount::processVectorDS(string fileLoc, VectorDS inputDS) {
+void WordCount::processVectorDS(string fileLoc, VectorDS * dsIn) {
 	//datastructure being used to process the text
-	VectorDS ds = inputDS;
+	VectorDS* ds = dsIn;
 
 	//input file stream
 	ifstream file;
@@ -72,9 +88,9 @@ void WordCount::processVectorDS(string fileLoc, VectorDS inputDS) {
 	vector<string> words;
 
 	//current word of the iterator
-	string current = "";
+	string current;
 	//last word of the iterator
-	string last = "";
+	string last = "!";
 
 	//tries to open the file, exits if it cannot open it
 	file.open(fileLoc);
@@ -87,36 +103,44 @@ void WordCount::processVectorDS(string fileLoc, VectorDS inputDS) {
 	//monograms and bigrams in the datastructure
 	while (getline(file, input)) {
 
+		//put every word in the line into a vector of strings
 		words = processLine(input);
+
+		//increment the fileSize for each word
+		ds->incrementFileSize(words.size());
 
 		//set current to the first word in the new line
 		current = words[0];
 
 		//if there is a word from the last line, increment the count of its bigram
-		if (last != "") {
-			ds(last, current)++;}
+		if (last != "!") {
+			ds->operator()(last, current)++;}
 
 			//increment the current's monogram
-		ds[current]++;
+		ds->operator[](current)++;
 
 		//increment all the monograms and bigrams of the line
-		for (int i = 1; i < words.size(); i++) {
+		for
+(		int i = 1; i < words.size (); i++) {
 			last = current;
 			current = words[i];
 
-			ds[current]++;
-			ds(last, current)++;}
-			//end for
+			ds->operator[] (current)++;
+			ds->operator() (last, current)++;
+		}
+		//end for
 
-			//set the current to last so it can be carried over to the next line
+		//set the current to last so it can be carried over to the next line
 		last = current;
 	} //end while
 
 	//calclulates all the probabilies for all the bigrams
-	ds.calcCondProb();
+	ds->calcCondProb();
 	//prints all the data to the .uni and .bi files
-	ds.printGrams();
+
+	ds->printGrams();
 
 	//close the input stream
 	file.close();
+
 } //end processVectorDS(string, VectorDS)
