@@ -16,16 +16,26 @@ class VectorDS: public DataStructure {
 public:
 	VectorDS();
 	virtual ~VectorDS();
+
 	void addWord(string);
 	void addTwoWords(string, string);
 	void addCondProb(string, string, double);
-	void printGrams();
-	void calcCondProb();
+
 	int getWord(string);
 	int getTwoWords(string, string);
 	double getCondProb(string, string);
+
+	void printGrams();
+
+	double calcProb(string, string);
+	void calcCondProb();
+
 	pair<string, string> split(string);
 	string toLowerCase(string);
+
+	double& operator[](string, string) override;
+	int& operator()(string) override;
+	int& operator()(string, string) override;
 
 private:
 	vector<pair<string, int>> mono;

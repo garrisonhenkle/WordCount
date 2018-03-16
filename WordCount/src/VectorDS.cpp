@@ -14,6 +14,7 @@ VectorDS::VectorDS() {
 }
 
 VectorDS::~VectorDS() {
+
 	mono.clear();
 	delete mono;
 	bi.clear();
@@ -211,4 +212,40 @@ void VectorDS::calcCondProb() {
 				<< endl;
 	}
 
+}
+
+double VectorDS::calcProb(string wordOne, string wordTwo) {
+
+	double probability;
+
+	int num = getTwoWords(wordOne, wordTwo);
+	int den = getWord(wordOne);
+
+	probability = num / den;
+
+	return probability;
+}
+
+double& VectorDS::operator[](string wordOne, string wordTwo) {
+	double& out;
+
+	out = getCondProb(wordOne, wordTwo);
+
+	return out;
+}
+
+int& VectorDS::operator()(string wordOne) {
+	int& out;
+
+	out = getWord(wordOne);
+
+	return out;
+}
+
+int& VectorDS::operator()(string wordOne, string wordTwo) {
+	int& out;
+
+	out = getTwoWords(wordOne, wordTwo);
+
+	return out;
 }

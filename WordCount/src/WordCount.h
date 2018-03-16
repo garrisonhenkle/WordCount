@@ -8,14 +8,13 @@
 #ifndef WORDCOUNT_H_
 #define WORDCOUNT_H_
 
-namespace std {
+using namespace std;
+
+#include "VectorDS.h";
 
 class WordCount {
 public:
-	WordCount();
-	virtual ~WordCount();
+	void processVectorDS(string);
 };
-
-} /* namespace std */
 
 #endif /* WORDCOUNT_H_ */

@@ -7,15 +7,32 @@
 
 #include "WordCount.h"
 
-namespace std {
-
-WordCount::WordCount() {
-	// TODO Auto-generated constructor stub
+int main(int argc, char* argv[]) {
 
 }
 
-WordCount::~WordCount() {
-	// TODO Auto-generated destructor stub
+vector<string> VectorDS::processLine(string line) {
+	vector<string> out;
+
+	for (int i = 0; i < line.length(); i++) {
+
+	}
+
+	return out;
 }
 
-} /* namespace std */
+void WordCount::processVectorDS(string fileLoc, VectorDS& inputDS) {
+	string input;
+	ifstream file;
+	VectorDS ds = inputDS;
+
+	file.open(fileLoc);
+	if (!file) {
+		cerr << "Unable to open input file";
+		exit(1);
+	}
+
+	while (getline(file, input)) {
+
+	}
+}
