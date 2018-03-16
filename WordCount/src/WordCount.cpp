@@ -50,18 +50,32 @@ void WordCount::processVectorDS(string fileLoc, VectorDS& inputDS) {
 	}
 
 	while (getline(file, input)) {
+
 		words = processLine(input);
 
 		current = words[0];
+
+		if (last != nullptr) {
+			ds(last, current)++;}
+
 		ds(current)++;
 
-		for (int i = 1; i < words.size(); i++) {
+		for
+(		int i = 1; i < words.size(); i++)
+		{
 			last = current;
 			current = words[i];
 
-			if(current)
 			ds(current)++;
 			ds(last, current)++;
 		}
+
+		last = current;
 	}
+	ds.calcCondProb();
+	ds.printGrams();
+
+	file.close();
+
+	delete ds;
 }
