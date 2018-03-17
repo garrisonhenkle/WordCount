@@ -1,6 +1,10 @@
 /*
  * AvlDS.h
  *
+ *Contains the AVL structure built off of the DataStructure interface
+ *
+ *Allows for the storage and printing of monograms, bigrams, and probabilities in an AVL tree
+ *
  *  Created on: Mar 10, 2018
  *      Author: Garrison Henkle
  */
@@ -11,10 +15,13 @@
 using namespace std;
 
 #include "DataStructure.h"
-#include "BSTA.h";
+#include "BSTA.h"
+#include <vector>
 
-class AvlDS : public DataStructure{
+class AvlDS: public DataStructure {
 public:
+
+	//see DataStructure.h for descriptions
 	AvlDS();
 	virtual ~AvlDS();
 
@@ -32,8 +39,11 @@ public:
 	long getFileSize();
 	string toLowerCase(string);
 private:
+	//holds monograms
 	BSTA * mono;
+	//holds bigrams
 	BSTA * bi;
+	//holds probabilities
 	BSTA * prob;
 };
 

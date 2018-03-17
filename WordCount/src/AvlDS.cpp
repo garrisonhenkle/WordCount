@@ -1,9 +1,12 @@
 /*
  * AvlDS.cpp
+
  *
- *  Created on: Mar 14, 2018
- *      Author: garrison
+ *  Created on: Mar 10, 2018
+ *      Author: Garrison Henkle
  */
+
+//see header for description
 
 #include "AvlDS.h"
 
@@ -20,7 +23,7 @@ AvlDS::~AvlDS() {
 	delete prob;
 }
 
-//see header for description
+
 string AvlDS::toLowerCase(string word) {
 	string out = word;
 
@@ -101,6 +104,7 @@ pair<string, string> AvlDS::split(string words) {
 void AvlDS::calcCondProb() {
 
 	double prob1;
+	int size;
 
 	string tempString;
 	string tempMono;
@@ -112,57 +116,58 @@ void AvlDS::calcCondProb() {
 	int bigramCount;
 	int monogramCount;
 
-	for (int i = 0; bi->list->size(); i++) {
-		tempString = bi->list[i];
+	size = bi->list->size();
+
+	//for every word in bi, calculate the probability
+	for (int i = 0; i < size; i++) {
+		//get bigram count
+		tempString = bi->getList(i);
 		temp = bi->find(tempString);
 		bigramCount = temp->biCount;
-
+		//get monogram count
 		tempSplit = split(tempString);
 		tempMono = tempSplit.first;
 		temp2 = mono->find(tempMono);
 		monogramCount = temp2->monoCount;
 
+		//calculate prob
 		prob1 = bigramCount / monogramCount;
-
+		//store prob
 		prob->find(tempString)->prob = prob1;
 	}
-
+	//clean up
 	delete temp;
 	delete temp2;
-	delete tempSplit;
 }
 
 int& AvlDS::operator[](string wordOne) {
-	int out;
 
 	string word = toLowerCase(wordOne);
 
-	out = mono->find(word)->monoCount;
-
-	return out;
+	return mono->find(word)->monoCount;
 }
 
 int& AvlDS::operator()(string wordOne, string wordTwo) {
-	int out;
 
 	string word = toLowerCase(wordOne + ' ' + wordTwo);
 
-	out = bi->find(word)->biCount;
-
-	return out;
+	return bi->find(word)->biCount;
 }
 
-double& AvlDS::operator()(string, string, int) {
-	double out = 0;
+double& AvlDS::operator()(string wordOne, string wordTwo, int) {
 
-	return out;
+	string word = toLowerCase(wordOne + ' ' + wordTwo);
+
+	return prob->find(word)->prob;
 }
 
 void AvlDS::incrementFileSize(long) {
 	//implemented in vector
+	int i = 0;
 }
 
 long getFileSize() {
 	//implemented in vector
-	return 0;
+	long temp = 1;
+	return temp;
 }

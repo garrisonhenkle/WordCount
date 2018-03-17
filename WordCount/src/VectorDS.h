@@ -1,6 +1,10 @@
 /*
  * VectorDS.h
  *
+ * Contains the vector structure built off the DataStructure interface
+ *
+ * Allows for the storage and printing of moonograms, bigrams, and probabilities in vectors
+ *
  *  Created on: Mar 10, 2018
  *      Author: Garrison henkle
  */

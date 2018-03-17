@@ -1,6 +1,11 @@
 /*
  * DataStructure.h
  *
+ * Interface for datastructures
+ *
+ * Allows for the storage and printing of monograms, bigrams,
+ *  and probabilities from a set of input data
+ *
  *  Created on: Mar 10, 2018
  *      Author: Garrison Henke
  */
@@ -44,7 +49,6 @@ public:
 	 * Adds input probability to the bigram
 	 */
 	//virtual void addCondProb(string, string, double) = 0;
-
 	/**
 	 * Returns the integer value for the count of the input monogram
 	 *
@@ -63,7 +67,6 @@ public:
 	 * Returns the double value for the probability of the bigram
 	 */
 	//virtual double getCondProb(string, string) = 0;
-
 	/**
 	 * Splits two words separated by a space
 	 *

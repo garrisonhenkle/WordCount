@@ -1,8 +1,8 @@
 /*
  * BSTA.cpp
  *
- *  Created on: Mar 16, 2018
- *      Author: garrison
+ *  Created on: Mar 10, 2018
+ *      Author: Garrison henkle
  */
 
 #include "BSTA.h"
@@ -10,7 +10,7 @@
 BSTA::BSTA() {
 	root = nullptr;
 	size = 0;
-	list = new vector<string>;
+	list = new vector<string>();
 }
 
 BSTA::~BSTA() {
@@ -23,6 +23,9 @@ NodeA * BSTA::findInorderSuccessor(NodeA * n) {
 
 	NodeA * out;
 
+	//Recusively check the left element until null is reached
+	//The final node in this recursion is the minimum of the subtree and the inorder
+	//successor of NodeA n's parent
 	if (n == nullptr) {
 		return nullptr;
 	} else if (n->leftChild == nullptr) {
@@ -49,7 +52,7 @@ NodeA * BSTA::find(string elm) {
 
 	//if the root is it, return the root, otherwise if it is smaller go left, if it is larger go right
 	if (root->element == elm) {
-		out = root->element;
+		out = root;
 	} else if (elm.compare(root->element) < 0) {
 		out = find(elm, root->leftChild);
 	} else {
@@ -62,11 +65,12 @@ NodeA * BSTA::find(string elm) {
 NodeA * BSTA::find(string elm, NodeA * n) {
 	NodeA * out;
 
-	if(n->element == elm){
+	//if the root is it, return the root, otherwise if it is smaller go left, if it is larger go right
+	if (n->element == elm) {
 		out = n;
-	} else if(elm.compare(n->element) < 0){
+	} else if (elm.compare(n->element) < 0) {
 		out = find(elm, n->leftChild);
-	}else{
+	} else {
 		out = find(elm, n->rightChild);
 	}
 
@@ -239,3 +243,10 @@ NodeA * BSTA::zigzigLeft(NodeA * &n) {
 	return zigLeft(n);
 }
 
+string BSTA::getList(int index) {
+	return list->at(index);
+}
+
+int BSTA::getListSize() {
+	return list->size();
+}

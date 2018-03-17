@@ -1,8 +1,12 @@
 /*
  * NodeA.h
  *
- *  Created on: Mar 16, 2018
- *      Author: garrison
+ * Node for the AVL tree BSTA
+ *
+ * Contains the data stored in each node of a BSTA tree, such as the count of mono- and bigrams, probabilites, height, and th
+ *
+ *  Created on: Mar 10, 2018
+ *      Author: Garrison Henkle
  */
 
 #ifndef NODEA_H_
@@ -24,8 +28,6 @@ public:
 	NodeA * parent;
 
 	int height;
-
-	NodeA * root;
 	int monoCount;
 	int biCount;
 	double prob;

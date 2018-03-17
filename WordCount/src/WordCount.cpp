@@ -23,7 +23,7 @@ int main(int argc, char* argv[]) {
 
 	DataStructure * vectorTrial = new VectorDS();
 	DataStructure * avlTrial = new AvlDS();
-	DataStructure * hashTrial = new HashDS();
+	//DataStructure * hashTrial = new HashDS();
 
 	WordCount wc = WordCount();
 
@@ -88,7 +88,7 @@ int main(int argc, char* argv[]) {
 
 	delete vectorTrial;
 	delete avlTrial;
-	delete hashTrial;
+	//delete hashTrial;
 	cout << "Finished: output in files text.uni, text.bi, and text.time" << endl;
 	return 0;
 } //end main(int, char*)

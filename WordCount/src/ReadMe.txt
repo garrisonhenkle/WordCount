@@ -1,9 +1,29 @@
-Description: This directory includes the code we have developed in class. In this mini-project, we are building a binary search tree. Currently, this code supports insertion, deletion, find minimum, and in-order traversal.
+g++ *.cpp -o Main
 
-Requirement: The latest version of the GNU g++ compiler and a Unix based operating system. For Windows users, try to use Linux Subsystem.
+Commands
+-----------
+Compilation: g++ *.cpp -o Main
 
-To Compile: g++-7 *.cpp -o BST
+-	Compiles the program to the script Main
 
-To run: ./BST
+Running: ./Main arg1 arg2 arg3 argn
 
-Known problems: None at this time.
+-	./ Main can be followed by n number of args containing string filenames
+
+- 	Examples: ./Main test1.txt test2.txt test3.txt test4.txt test5.txt
+-		  ./Main test1.txt
+-		  ./Main test1.bi test2.uni
+
+
+Notes
+-------------
+-	All unigrams and bigrams are output to the files text.uni and text.bi respectively
+
+-	The processing time of all files will be output to the text.time file
+
+-	text.uni contains all monograms paired with their counts
+
+-	text.bi contains all bigrams paired with their counts and probabilities
+
+-	For multiple file inputs (ex: ./Main text1.txt text2.txt), the bigram and monograms of every additional file will be appended to the end of the file, separated by two lines ('\n' characters)
+

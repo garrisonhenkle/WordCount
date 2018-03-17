@@ -1,6 +1,10 @@
 /*
  * WordCount.h
  *
+ * Main file for the program that contains the main() function
+ *
+ * Contains methods to process lines of text, such as reading and storage
+ *
  *  Created on: Mar 10, 2018
  *      Author: Garrison Henkle
  */
