@@ -13,6 +13,9 @@ NodeA::NodeA() {
 	rightChild =nullptr;
 	root = nullptr;;
 	parent = nullptr;
+	monoCount = 0;
+	biCount = 0;
+	prob = 0;
 
 }
 

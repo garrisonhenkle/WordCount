@@ -22,6 +22,8 @@ int main(int argc, char* argv[]) {
 	string fileName;
 
 	DataStructure * vectorTrial = new VectorDS();
+	DataStructure * avlTrial = new AvlDS();
+	DataStructure * hashTrial = new HashDS();
 
 	WordCount wc = WordCount();
 
@@ -44,10 +46,13 @@ int main(int argc, char* argv[]) {
 		//push the file word count to the vector
 		fileWordCount.push_back(vectorTrial->getFileSize());
 
+		//print the grams
+		vectorTrial->printGrams();
+
 		//start the clock for the avl
 		startTime = chrono::high_resolution_clock::now();
 		//process the avl for the file
-
+		wc.processDS(fileName, avlTrial);
 		//stop the clock for the avl
 		finishTime = chrono::high_resolution_clock::now();
 		//find the elapsed time for the avl
@@ -81,7 +86,9 @@ int main(int argc, char* argv[]) {
 		file << vectorTrial->getFileSize() << '\t' << vectorTime[i] << '\t' << avlTime[i] << '\t' << hashTime[i] << endl;
 	}
 
-	delete ds;
+	delete vectorTrial;
+	delete avlTrial;
+	delete hashTrial;
 	cout << "Finished: output in files text.uni, text.bi, and text.time" << endl;
 	return 0;
 } //end main(int, char*)
@@ -174,5 +181,7 @@ void WordCount::processDS(string fileLoc, DataStructure * dsIn) {
 
 	//close the input stream
 	file.close();
+
+	//Note: dsIn is deleted in the main function
 
 } //end processVectorDS(string, VectorDS)

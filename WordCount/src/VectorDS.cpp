@@ -255,11 +255,15 @@ void VectorDS::printGrams() {
 	//
 
 	//try to open the file, exits if the file fails to open
-	file.open(monoOut);
+	file.open(monoOut, ios_base::app);
 	if (!file) {
 		cerr << "Can't write the output files.";
 		exit(1);
 	}
+
+	//Creates separation in case multiple files are processed
+	//Since all data is written to the same text.uni and text.bi files
+	file << "\n\n";
 
 	//prints the monogram followed by a space followed by the monogram's count
 	for (int i = 0; i < mono->size(); i++) {
@@ -274,11 +278,15 @@ void VectorDS::printGrams() {
 	//
 
 	//tries to open the file, exits if the file fails to open
-	file2.open(biOut);
+	file2.open(biOut, ios_base::app);
 	if (!file2) {
 		cerr << "Can't write the output files.";
 		exit(1);
 	}
+
+	//Creates separation in case multiple files are processed
+	//Since all data is written to the same text.uni and text.bi files
+	file2 << "\n\n";
 
 	//prints the bigram, a space, the bigram's count, a space, and the probability of the bigram
 	for (int i = 0; i < bi->size(); i++) {

@@ -24,8 +24,12 @@ public:
 	NodeA * parent;
 
 	int height;
-private:
+
 	NodeA * root;
+	int monoCount;
+	int biCount;
+	double prob;
+private:
 
 };
 #endif /* NODEA_H_ */

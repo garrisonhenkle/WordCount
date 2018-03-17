@@ -11,6 +11,8 @@
 using namespace std;
 
 #include "VectorDS.h"
+#include "AvlDS.h"
+#include "HashDS.h"
 
 class WordCount {
 public:
