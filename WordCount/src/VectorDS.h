@@ -53,8 +53,7 @@ public:
 	/**
 	 * Returns the reference location of the requested bigram's count variable
 	 */
-	int& getWordRef(string);
-
+	//int& getWordRef(string);
 	/**
 	 * Returns the count of the bigram
 	 *
@@ -65,8 +64,7 @@ public:
 	/**
 	 * Returns the reference location of the requested bigram's count variable
 	 */
-	int& getTwoWordsRef(string, string);
-
+	//int& getTwoWordsRef(string, string);
 	/**
 	 * Returns the probability of the bigram
 	 *
@@ -80,7 +78,7 @@ public:
 	 *
 	 * Returns -1 if the bigram is not found
 	 */
-	double& getCondProbRef(string, string);
+	//double& getCondProbRef(string, string);
 	/**
 	 * Prints the contents of the datastructure to the files text.uni and text.bi
 	 */
@@ -113,6 +111,8 @@ public:
 
 	/**
 	 * operator that returns the probability of an input bigram
+	 *
+	 * Int variable distinguishes the porbability operator from the bigram operator and serves no purpose
 	 */
 	double& operator()(string, string, int);
 
@@ -133,11 +133,11 @@ public:
 
 private:
 	//contains the monograms
-	vector<pair<string, int>> mono;
+	vector<pair<string, int>> * mono;
 	//contains the bigrams
-	vector<pair<string, int>> bi;
+	vector<pair<string, int>> * bi;
 	//contains the probabilities
-	vector<pair<string, double>> prob;
+	vector<pair<string, double>> * prob;
 
 	//contains the size of the file
 	long fileSize;

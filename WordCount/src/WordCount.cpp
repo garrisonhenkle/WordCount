@@ -12,6 +12,7 @@ int main(int argc, char* argv[]) {
 	//holds the time it takes for the three data structures to read and print
 	long time;
 
+	vector<long> fileWordCount;
 	vector<long> vectorTime;
 	vector<long> avlTime;
 	vector<long> hashTime;
@@ -20,42 +21,68 @@ int main(int argc, char* argv[]) {
 
 	string fileName;
 
-	VectorDS * ds = new VectorDS();
+	DataStructure * vectorTrial = new VectorDS();
 
 	WordCount wc = WordCount();
 
-	//for (int i = 0; i < argc; i++) {
+	for (int i = 0; i < argc; i++) {
 
-	//fileName = argv[i];
+		fileName = argv[i];
 
-	fileName = "text1.txt";
+		//start the clock for the vector
+		auto startTime = chrono::high_resolution_clock::now();
 
-	auto startTime = chrono::high_resolution_clock::now();
+		//process the vector for the file
+		wc.processDS(fileName, vectorTrial);
+		//stop the clock for the vector
+		auto finishTime = chrono::high_resolution_clock::now();
+		//find the elapsed time for the vector
+		time = chrono::duration_cast<chrono::nanoseconds>(finishTime - startTime).count();
+		//push the time on the vector's time vector
+		vectorTime.push_back(time);
 
-	//Count using the vector
-	//Count placed inside a nanosecond timer
-	wc.processVectorDS(fileName, ds);
-	auto finishTime = chrono::high_resolution_clock::now();
-	time = chrono::duration_cast<chrono::nanoseconds>(finishTime - startTime).count();
-	vectorTime.push_back(time);
-	avlTime.push_back(0);
-	hashTime.push_back(0);
+		//push the file word count to the vector
+		fileWordCount.push_back(vectorTrial->getFileSize());
 
-//	}
+		//start the clock for the avl
+		startTime = chrono::high_resolution_clock::now();
+		//process the avl for the file
 
+		//stop the clock for the avl
+		finishTime = chrono::high_resolution_clock::now();
+		//find the elapsed time for the avl
+		time = chrono::duration_cast<chrono::nanoseconds>(finishTime - startTime).count();
+		//push the time on the avl's time vector
+		avlTime.push_back(0);
+
+		//start the clock for the hash
+		startTime = chrono::high_resolution_clock::now();
+		//process the hash for the file
+
+		//stop the clock for the hash
+		finishTime = chrono::high_resolution_clock::now();
+		//find the elapsed time for the hash
+		time = chrono::duration_cast<chrono::nanoseconds>(finishTime - startTime).count();
+		//push the time on the hash's time vector
+		hashTime.push_back(0);
+
+	}
+
+	//try to open the output file
 	file.open("text.time");
 	if (!file) {
 		cerr << "couldn't open the file";
 		exit(1);
 	}
 
+	//write the table of times
 	file << '\t' << "Vector\t" << "AVL\t" << "Hash\t" << endl;
 	for (int i = 0; i < vectorTime.size(); i++) {
-		file << ds->getFileSize() << '\t' << vectorTime[i] << '\t' << avlTime[i] << '\t' << hashTime[i] << endl;
+		file << vectorTrial->getFileSize() << '\t' << vectorTime[i] << '\t' << avlTime[i] << '\t' << hashTime[i] << endl;
 	}
 
 	delete ds;
-	cout << "Finished: output in files text.uni, text.bi, " << endl;
+	cout << "Finished: output in files text.uni, text.bi, and text.time" << endl;
 	return 0;
 } //end main(int, char*)
 
@@ -87,9 +114,7 @@ vector<string> WordCount::processLine(string line) {
 } //end processLine(string)
 
 //see header for description
-void WordCount::processVectorDS(string fileLoc, VectorDS * dsIn) {
-	//datastructure being used to process the text
-	VectorDS* ds = dsIn;
+void WordCount::processDS(string fileLoc, DataStructure * dsIn) {
 
 	//input file stream
 	ifstream file;
@@ -119,38 +144,33 @@ void WordCount::processVectorDS(string fileLoc, VectorDS * dsIn) {
 		words = processLine(input);
 
 		//increment the fileSize for each word
-		ds->incrementFileSize(words.size());
+		dsIn->incrementFileSize(words.size());
 
 		//set current to the first word in the new line
 		current = words[0];
 
 		//if there is a word from the last line, increment the count of its bigram
 		if (last != "!") {
-			ds->operator()(last, current)++;}
+			(*dsIn)(last, current)++;}
 
 			//increment the current's monogram
-		ds->operator[](current)++;
+		(*dsIn)[current]++;
 
 		//increment all the monograms and bigrams of the line
-		for
-(		int i = 1; i < words.size (); i++) {
+		for (int i = 1; i < words.size(); i++) {
 			last = current;
 			current = words[i];
 
-			ds->operator[] (current)++;
-			ds->operator() (last, current)++;
-		}
-		//end for
+			(*dsIn)[current]++;
+			(*dsIn)(last, current)++;}
+			//end for
 
-		//set the current to last so it can be carried over to the next line
+			//set the current to last so it can be carried over to the next line
 		last = current;
 	} //end while
 
 	//calclulates all the probabilies for all the bigrams
-	ds->calcCondProb();
-	//prints all the data to the .uni and .bi files
-
-	ds->printGrams();
+	dsIn->calcCondProb();
 
 	//close the input stream
 	file.close();

@@ -17,7 +17,7 @@ public:
 	/**
 	 * Processes the vectorDS datastructure by calculating the probabilties of each bigram and outputs the results to the files text.uni and text.bi
 	 */
-	void processVectorDS(string, VectorDS * dsIn);
+	void processDS(string, DataStructure *);
 
 	/**
 	 * Converts a line into a vector of words (strings)

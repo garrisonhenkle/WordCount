@@ -72,6 +72,38 @@ public:
 	 * For example, the input "hello world" would give an output pair with first = "hello" and second = "world"
 	 */
 	virtual pair<string, string> split(string) = 0;
+
+	/**
+	 * Calculates the probabilities for all bigrams
+	 */
+	virtual void calcCondProb();
+
+	/**
+	 * Returns the reference to the count variable for the monograms
+	 */
+	virtual int& operator[](string) = 0;
+
+	/**
+	 * Returns the reference to the count variable for the bigrams
+	 */
+	virtual int& operator()(string, string) = 0;
+
+	/**
+	 * Returns the reference to the probability variable for the bigrams
+	 *
+	 * The integer is just for distinction, so it be any integer
+	 */
+	virtual double& operator()(string, string, int) = 0;
+
+	/**
+	 *Increments the file size by the input long
+	 */
+	virtual void incrementFileSize(long) = 0;
+
+	/**
+	 * Returns the current fileSize variable
+	 */
+	virtual long getFileSize() = 0;
 };
 
 #endif /* DATASTRUCTURE_H_ */
